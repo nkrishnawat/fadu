@@ -3,11 +3,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './screens/Home';
 import Details from './screens/Details';
+import PaymentScreen from './screens/PaymentScreen';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createNativeStackNavigator();
 
 const MyStack = () => {
   return (
+    <StripeProvider
+    publishableKey="pk_test_TYooMQauvdEDq54NiTphI7jx" 
+    urlScheme="your-url-scheme" 
+    merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}">
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -16,8 +22,10 @@ const MyStack = () => {
           options={{title: 'F A D U'}}
         />
         <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </StripeProvider>
   );
 };
 

@@ -1,14 +1,20 @@
 import { Button, Text, View, Image } from "react-native";
+import {Dimensions} from 'react-native';
 
-const Details = ({navigation}, {it}) => {
+const dimensions = Dimensions.get('window');   
+const imageWidth = dimensions.width;
+const imageHeight = dimensions.height;
 
+const Details = ({route, navigation} ) => {
+    const { it } = route.params;
     const backToHome = () => navigation.navigate('Home');
 
     return (
     <View>
-        <Text>Details Page</Text>
-        <Image source={{ uri: it.picture.large }}/>
-        <Button onPress={backToHome} title="Home" style={{with: '20%'}}>Home</Button>
+        <Image style={{height: imageHeight/2, width: imageWidth}} source={{ uri: it.picture.large }}/>
+        <Button title="Add to CART" style={{with: '20%'}} onPress={() =>
+        navigation.navigate('PaymentScreen')
+        }>Add to CART.</Button>
     </View>);
 }
 
