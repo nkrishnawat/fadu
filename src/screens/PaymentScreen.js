@@ -1,10 +1,10 @@
-import { CardField, useConfirmPayment, useStripe, BillingDetails, Address } from '@stripe/stripe-react-native';
+import { CardField, useConfirmPayment, useStripe, BillingDetails, Address, TextInput } from '@stripe/stripe-react-native';
 import { Button, Text, View, Image, useState } from "react-native";
 
 function PaymentScreen() {
 
     const { confirmPayment, loading } = useConfirmPayment();
-    const [billingDetails, setBillingDetails] = useState(new BillingDetails("", "", "", new Address("", "", "", "", "", "")));
+    const [billingDetails, setBillingDetails] = useState(0);
 
 
     const fetchPaymentIntentClientSecret = async () => {

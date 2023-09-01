@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, StatusBar, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, Image, ScrollView, StyleSheet, ActivityIndicator, StatusBar, TouchableOpacity } from "react-native";
 import axios from "axios";
 
-const Home = ({navigation}) => {
+const Home = ({route, navigation}) => {
+  const {it} = route.params;
+  
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getUsers = () => {
+   const getUsers = (count) => {
     setIsLoading(true);
-    axios.get(`https://randomuser.me/api/?page=${currentPage}&results=10`)
+    axios.get(`https://randomuser.me/api/?page=${currentPage}&results=${count}`)
       .then(res => {
         //setUsers(res.data.results);
         setUsers([...users, ...res.data.results]);
         setIsLoading(false);
       });
   };
-
+  
   const renderItem = ({ item }) => {
     return (
       <View style={styles.itemWrapperStyle}>
@@ -47,7 +49,8 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    getUsers();
+    console.log('>' + it);
+    getUsers(it);
   }, [currentPage]);
 
   return (
