@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, StatusBar, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, Image, ScrollView, StyleSheet, ActivityIndicator, StatusBar, TouchableOpacity, Button } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const Home = ({navigation}) => {
+const Home = ({route, navigation}) => {
+  const {count} = route.params;
+
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getUsers = () => {
+   const getUsers = (count) => {
+    alert('Called with count ' + count)
     setIsLoading(true);
-    axios.get(`https://randomuser.me/api/?page=${currentPage}&results=10`)
+    axios.get(`https://randomuser.me/api/?page=${currentPage}&results=${count}`)
       .then(res => {
+        alert('API call happened..')
         //setUsers(res.data.results);
         setUsers([...users, ...res.data.results]);
-        setIsLoading(false);
+        setIsLoading(false); 
       });
   };
 
@@ -47,12 +52,34 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    getUsers();
-  }, [currentPage]);
+    getUsers(count);
+  }, [currentPage, count]);
 
   return (
     <>
       <StatusBar backgroundColor="#000" />
+      <Button onPress={async ()=> {
+        try {
+          await AsyncStorage.setItem(
+            '@MySuperStore:key',
+            'I like to save it.',
+          );
+        } catch (error) {
+          alert(error);
+        }
+      }} title="Click me"></Button>
+      <Button onPress={async () => {
+          try {
+            const value = await AsyncStorage.getItem('@MySuperStore:key');
+            alert(value);
+            if (value !== null) {
+              // We have data!!
+              alert(value);
+            }
+          } catch (error) {
+            alert(error);
+        }
+      }} title="Click Me to get value"></Button>
       <FlatList
         data={users}
         renderItem={renderItem}
@@ -94,5 +121,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-
-
