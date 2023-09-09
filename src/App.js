@@ -7,6 +7,7 @@ import Details from './screens/Details';
 import PaymentScreen from './screens/PaymentScreen';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { getUsers } from './screens/Home';
+import SMS from './screens/SMS';
 
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,7 @@ const MyStack = () => {
           component={Home} initialParams={{count: 10}}/>
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
+        <Stack.Screen name="SMS" component={SMS}/>
       </Stack.Navigator>
     </NavigationContainer>
     </StripeProvider>

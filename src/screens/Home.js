@@ -58,28 +58,6 @@ const Home = ({route, navigation}) => {
   return (
     <>
       <StatusBar backgroundColor="#000" />
-      <Button onPress={async ()=> {
-        try {
-          await AsyncStorage.setItem(
-            '@MySuperStore:key',
-            'I like to save it.',
-          );
-        } catch (error) {
-          alert(error);
-        }
-      }} title="Click me"></Button>
-      <Button onPress={async () => {
-          try {
-            const value = await AsyncStorage.getItem('@MySuperStore:key');
-            alert(value);
-            if (value !== null) {
-              // We have data!!
-              alert(value);
-            }
-          } catch (error) {
-            alert(error);
-        }
-      }} title="Click Me to get value"></Button>
       <FlatList
         data={users}
         renderItem={renderItem}
