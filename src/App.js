@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { StripeProvider } from '@stripe/stripe-react-native';
 import Home from './screens/Home';
 import Details from './screens/Details';
 import PaymentScreen from './screens/PaymentScreen';
-import { StripeProvider } from '@stripe/stripe-react-native';
-import { getUsers } from './screens/Home';
 import SMS from './screens/SMS';
-
+import SupplierLogin from './screens/SupplierLogin';
+import ImagePickerExample from './screens/ImagePickerExample';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,7 +18,11 @@ const HeaderComponent = () => {
   return (
     <View style={styles.container}>
       <View style={styles.staticTextContainer}>
-        <Text style={styles.staticText}>F A D U       </Text>
+        <Pressable onPress={() => navigation.navigate('Login', {it: {}}) } title='Remove' style={({pressed})=> {
+                    return [styles.row, {opacity: pressed? 0.3 : 1 }]
+            }}>
+            <Text style={styles.staticText}>F A D U       </Text>
+        </Pressable>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -37,7 +41,13 @@ const HeaderComponent = () => {
           <Text style={styles.divider}>|</Text>
           <Text style={styles.menuItem}>Mens TShirt</Text>
           <Text style={styles.divider}>|</Text>
-          <Text style={styles.menuItem}>Women's Jewellery</Text>
+          <Text style={styles.menuItem}>Women's Jewellery     ---</Text>
+          <Text style={styles.supplierMenuItem} onPress={() => {
+             navigation.navigate('SupplierLogin', {count: 1});
+          }}>LogIn</Text>
+          <Text style={styles.supplierMenuItem} onPress={() => {
+             navigation.navigate('ImagePickerExample', {count: 1});
+          }}>ImagePickerExample</Text>
           {/* Add more menu items as needed */}
         </View>
       </ScrollView>
@@ -59,6 +69,8 @@ const MyStack = () => {
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="PaymentScreen" component={PaymentScreen} />
         <Stack.Screen name="SMS" component={SMS}/>
+        <Stack.Screen name='SupplierLogin' component={SupplierLogin}/>
+        <Stack.Screen name='ImagePickerExample' component={ImagePickerExample}/>
       </Stack.Navigator>
     </NavigationContainer>
     </StripeProvider>
@@ -81,6 +93,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  staticTextLogin: {
+    fontWeight: 'bold',
+    fontSize: 3,
+  },
   menuItems: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -90,6 +106,13 @@ const styles = StyleSheet.create({
     marginLeft: 6,
     fontSize: 10,
     color: 'grey'
+  },
+  supplierMenuItem: {
+    marginRight: 8,
+    marginLeft: 6,
+    fontSize: 10,
+    color: 'green',
+    textDecorationLine: 'underline'
   },
   divider: {
     color: '#ccc',

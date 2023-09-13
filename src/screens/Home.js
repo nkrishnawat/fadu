@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   itemWrapperStyle: {
     flexDirection: "row",
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderColor: "#ddd",
   },

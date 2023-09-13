@@ -68,6 +68,13 @@ const Details = ({route, navigation} ) => {
             <Image style={styles.image} source={require("../../assets/icons8-order-64.png")}/>
             <Text style={styles.text}>Checkout</Text>
         </Pressable>
+
+        <Pressable onPress={() => navigation.navigate('Home', {it: it}) } title='Go to Home' style={({pressed})=> {
+                    return [styles.row, {opacity: pressed? 0.3 : 1 }]
+            }}>
+            <Image style={styles.image} source={require("../../assets/icons8-home-64.png")}/>
+            <Text style={styles.text}>Home</Text>
+        </Pressable>
         
     </View>);
 }
